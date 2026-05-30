@@ -17,7 +17,6 @@ new class extends Component {
         ]);
 
         $user->Email = $validated['account_email'];
-        $user->EmailConfirmed = 0;
         $user->save();
 
         return redirect()->route('dashboard');
@@ -28,15 +27,15 @@ new class extends Component {
 
 <div>
     <div class="flex flex-col">
-        <h2 class="text-gray-100 text-xl font-bold mb-2">Add an email</h2>
-        <p class="text-gray-400 mb-4">To proceed, you must enter a valid email address to confirm your account.</p>
+        <h2 class="text-gray-100 text-xl font-bold mb-2">Thêm email</h2>
+        <p class="text-gray-400 mb-4">Để tiếp tục, bạn phải nhập địa chỉ email hợp lệ để xác nhận tài khoản.</p>
         <form wire:submit.prevent="addEmail" class="space-y-4">
             <div>
                 <x-input-label for="account_email" :value="__('Email')" />
                 <x-text-input wire:model="account_email" id="account_email" name="account_email" type="email" class="mt-1 block w-full" required autocomplete="account_email" />
                 <x-input-error class="mt-2" :messages="$errors->get('account_email')" />
             </div>
-            <x-primary-button type="submit" class="w-full">Add Email</x-primary-button>
+            <x-primary-button type="submit" class="w-full">Thêm email</x-primary-button>
         </form>
     </div>
 </div>

@@ -24,14 +24,8 @@
     </head>
     <body class="font-sans antialiased">
 
-        @if(!Auth::user()->Email)
-            <x-modal-container :closeable="false">
-                <livewire:components.add-email />
-            </x-modal-container>
-        @endif
-
         <div class="uses_gangtags_background min-h-screen bg-gray-900">
-            <livewire:layout.navigation />
+            @include('partials.navigation')
 
             <div class="bg-gray-800 max-w-7xl rounded-lg border border-stroke-primary mt-5 mx-2 lg:mx-auto overflow-clip">
                 <div class="mx-auto">
@@ -44,7 +38,7 @@
             <div class="max-w-7xl mx-auto w-full text-[#4A4A4A] px-2 lg:px-0">
                 <div class="inline-flex items-center justify-between w-full">
                     <p class="text-sm mt-4">
-                        &copy; 2024 {{ config('app.name', 'Laravel') }}. All rights reserved.
+                        &copy; 2024 {{ config('app.name', 'Laravel') }}. Bảo lưu mọi quyền.
                     </p>
                     <p class="text-sm mt-4">
                         Version {{ config('app.version', '') }}

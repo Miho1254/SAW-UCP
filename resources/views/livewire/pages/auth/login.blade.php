@@ -39,11 +39,19 @@ new #[Layout('layouts.guest')] class extends Component
         </p>
     </div>
 
+    <div class="mb-4 w-full rounded-lg bg-gray-900 border border-stroke-primary p-3">
+        <p class="text-xs text-gray-400">
+            <span class="text-gray-300 font-medium">Lần đầu chơi?</span> Bạn cần
+            <a href="{{ route('register') }}" class="text-blue-400 hover:underline" wire:navigate>đăng ký tài khoản</a>
+            trước khi vào game.
+        </p>
+    </div>
+
     <form wire:submit="login" class="mt-4 w-full">
         <!-- Email Address -->
         <div>
             <x-input-label for="account_name" :value="__('Username')" />
-            <x-text-input wire:model="form.account_name" id="account_name" class="block mt-1 w-full" type="text" name="account_name" required autofocus autocomplete="username" placeholder="Username" />
+            <x-text-input wire:model="form.account_name" id="account_name" class="block mt-1 w-full" type="text" name="account_name" required autofocus autocomplete="username" placeholder="Tên tài khoản" />
             <x-input-error :messages="$errors->get('form.account_name')" class="mt-2" />
         </div>
 
@@ -62,7 +70,7 @@ new #[Layout('layouts.guest')] class extends Component
                             type="password"
                             name="account_password"
                             required autocomplete="current-password"
-                            placeholder="Password"
+                            placeholder="Mật khẩu"
             />
 
             <x-input-error :messages="$errors->get('form.account_password')" class="mt-2" />
