@@ -34,6 +34,8 @@ class User extends Authenticatable implements FilamentUser, HasName
         'UpdateDate',
         'EmailConfirmed',
         'BirthDate',
+        'DedicatedTimestamp',
+        'DedicatedDaymarker',
     ];
 
     protected $hidden = [
@@ -48,6 +50,10 @@ class User extends Authenticatable implements FilamentUser, HasName
 
     protected static function booted(): void
     {
+        static::creating(function ($user) {
+            $user->DedicatedTimestamp = $user->DedicatedTimestamp ?? '1926-01-01';
+            $user->DedicatedDaymarker = $user->DedicatedDaymarker ?? '1926-01-01';
+        });
         static::saving(function ($user) {
             $user->UpdateDate = now();
         });
