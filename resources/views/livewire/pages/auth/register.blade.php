@@ -35,6 +35,7 @@ new #[Layout('layouts.guest')] class extends Component
             'IP' => request()->ip(),
             'RegiDate' => now(),
             'LastLogin' => now(),
+            'BirthDate' => '1926-01-01',
         ])));
 
         Auth::login($user);
