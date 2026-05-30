@@ -37,11 +37,17 @@ class SampQueryAPI
     public function __construct($sServer, $iPort = 7777)
     {
         /* Fill some arrays. */
-        $this->aServer[0] = $sServer;
-        $this->aServer[1] = $iPort;
+        $this->aServer[0] = gethostbyname($sServer);
+        $this->aServer[1] = (int) $iPort;
+
+        /* Validate IP address */
+        if (!filter_var($this->aServer[0], FILTER_VALIDATE_IP)) {
+            $this->aServer[4] = false;
+            return;
+        }
 
         /* Start the connection. */
-        $this->rSocket = fsockopen('udp://'.$this->aServer[0], $this->aServer[1], $iError, $sError, 2);
+        $this->rSocket = @fsockopen('udp://'.$this->aServer[0], $this->aServer[1], $iError, $sError, 2);
 
         if(!$this->rSocket)
         {
@@ -52,10 +58,10 @@ class SampQueryAPI
         socket_set_timeout($this->rSocket, 2);
 
         $sPacket = 'SAMP';
-        $sPacket .= chr(strtok($this->aServer[0], '.'));
-        $sPacket .= chr(strtok('.'));
-        $sPacket .= chr(strtok('.'));
-        $sPacket .= chr(strtok('.'));
+        $sPacket .= chr((int) strtok($this->aServer[0], '.'));
+        $sPacket .= chr((int) strtok('.'));
+        $sPacket .= chr((int) strtok('.'));
+        $sPacket .= chr((int) strtok('.'));
         $sPacket .= chr($this->aServer[1] & 0xFF);
         $sPacket .= chr($this->aServer[1] >> 8 & 0xFF);
         $sPacket .= 'p4150';
@@ -339,10 +345,10 @@ class SampQueryAPI
     private function createPacket($sPayload)
     {
         $sPacket = 'SAMP';
-        $sPacket .= chr(strtok($this->aServer[0], '.'));
-        $sPacket .= chr(strtok('.'));
-        $sPacket .= chr(strtok('.'));
-        $sPacket .= chr(strtok('.'));
+        $sPacket .= chr((int) strtok($this->aServer[0], '.'));
+        $sPacket .= chr((int) strtok('.'));
+        $sPacket .= chr((int) strtok('.'));
+        $sPacket .= chr((int) strtok('.'));
         $sPacket .= chr($this->aServer[1] & 0xFF);
         $sPacket .= chr($this->aServer[1] >> 8 & 0xFF);
         $sPacket .= $sPayload;
@@ -351,15 +357,19 @@ class SampQueryAPI
     }
 
     // Returns the current player count
-    // Results are stored in cache for 30 seconds to reduce load
+    // Results are stored in cache for 5 minutes to reduce load
     public static function getServerPlayerCount(bool $forceLiveCheck = false): int
     {
-        return Cache::remember('current_player_count', 30, function() {
-            $server = new SampQueryAPI(config('app.server_ip'), config('app.server_ip_port'));
-            if ($server->isOnline()) {
-                return $server->getInfo()['players'];
-            }
-            return -1;
-        });
+        try {
+            return Cache::remember('current_player_count', 300, function() {
+                $server = new SampQueryAPI(config('app.server_ip'), config('app.server_ip_port'));
+                if ($server->isOnline()) {
+                    return $server->getInfo()['players'];
+                }
+                return -1;
+            });
+        } catch (\Throwable $e) {
+            return Cache::get('current_player_count', -1);
+        }
     }
 }
