@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Singleplayer Roleplay Map</title>
+    <title>Bản đồ SAW Community</title>
     <!-- Disallow users to scale this page -->
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
 
@@ -67,38 +67,38 @@
     <img src="/assets/logos/logo_small.png" class="w-8 h-8 inline-block">
 
     <div x-show="houses">
-        <input onclick="toggleHouses();" @click="houses = ! houses" type=button value="Show Houses"
+        <input onclick="toggleHouses();" @click="houses = ! houses" type=button value="Nhà ở"
                class="bg-gray-700 text-sm text-gray-200 px-2 py-1 rounded-lg hover:cursor-pointer hover:bg-gray-600">
     </div>
     <div x-show="!houses" x-cloak>
-        <input onclick="toggleHouses();" @click="houses = ! houses" type=button value="Show Houses"
+        <input onclick="toggleHouses();" @click="houses = ! houses" type=button value="Nhà ở"
                class="bg-gray-800 line-through text-sm text-gray-500 px-2 py-1 rounded-lg hover:cursor-pointer hover:bg-gray-600">
     </div>
 
     <div x-show="biz">
-        <input onclick="toggleBiz();" @click="biz = ! biz" type=button value="Show Businesses"
+        <input onclick="toggleBiz();" @click="biz = ! biz" type=button value="Doanh nghiệp"
                class="bg-gray-700 text-sm text-gray-200 px-2 py-1 rounded-lg hover:cursor-pointer hover:bg-gray-600">
     </div>
     <div x-show="!biz" x-cloak>
-        <input onclick="toggleBiz();" @click="biz = ! biz" type=button value="Show Businesses"
+        <input onclick="toggleBiz();" @click="biz = ! biz" type=button value="Doanh nghiệp"
                class="bg-gray-800 line-through text-sm text-gray-500 px-2 py-1 rounded-lg hover:cursor-pointer hover:bg-gray-600">
     </div>
 
     <div x-show="turfs">
-        <input onclick="toggleTurfs();" @click="turfs = ! turfs" type=button value="Show Turfs"
+        <input onclick="toggleTurfs();" @click="turfs = ! turfs" type=button value="Lãnh thổ"
                class="bg-gray-700 text-sm text-gray-200 px-2 py-1 rounded-lg hover:cursor-pointer hover:bg-gray-600">
     </div>
     <div x-show="!turfs" x-cloak>
-        <input onclick="toggleTurfs();" @click="turfs = ! turfs" type=button value="Show Turfs"
+        <input onclick="toggleTurfs();" @click="turfs = ! turfs" type=button value="Lãnh thổ"
                class="bg-gray-800 line-through text-sm text-gray-500 px-2 py-1 rounded-lg hover:cursor-pointer hover:bg-gray-600">
     </div>
 
     <div x-show="poi">
-        <input onclick="togglePoi();" @click="poi = ! poi" type=button value="Show Points of Interest"
+        <input onclick="togglePoi();" @click="poi = ! poi" type=button value="Điểm quan tâm"
                class="bg-gray-700 text-sm text-gray-200 px-2 py-1 rounded-lg hover:cursor-pointer hover:bg-gray-600">
     </div>
     <div x-show="!poi" x-cloak>
-        <input onclick="togglePoi();" @click="poi = ! poi" type=button value="Show Points of Interest"
+        <input onclick="togglePoi();" @click="poi = ! poi" type=button value="Điểm quan tâm"
                class="bg-gray-800 line-through text-sm text-gray-500 px-2 py-1 rounded-lg hover:cursor-pointer hover:bg-gray-600">
     </div>
 </div>
@@ -109,53 +109,53 @@
         <button @click="isLegendVisible = !isLegendVisible">
             <x-heroicon-m-eye class="h-4 w-4 inline-block text-gray-500"/>
         </button>
-        <p class="text-sm text-gray-200 rounded-lg">Legend</p>
+        <p class="text-sm text-gray-200 rounded-lg">Chú giải</p>
     </div>
     <div x-show="isLegendVisible"
          class="h-auto max-w-full md:max-w-1/3 flex-wrap flex items-center space-x-1 space-y-1 xl:space-y-0">
         <div class="bg-gray-700 text-sm text-gray-200 px-2 py-1 rounded-lg">
             <img src="/assets/mapicons/biz.png" class="w-4 h-4 inline-block mr-1">
-            <span>Houses</span>
+            <span>Nhà ở</span>
         </div>
         <div class="bg-gray-700 text-sm text-gray-200 px-2 py-1 rounded-lg">
             <img src="/assets/mapicons/houses.png" class="w-4 h-4 inline-block mr-1">
-            Businesses
+            Doanh nghiệp
         </div>
         <div class="bg-gray-700 text-sm text-gray-200 px-2 py-1 rounded-lg">
             <img src="/assets/mapicons/radar_gyma.png" class="w-4 h-4 inline-block mr-1">
-            Gym
+            Phòng tập
         </div>
         <div class="bg-gray-700 text-sm text-gray-200 px-2 py-1 rounded-lg">
             <img src="/assets/mapicons/radar_modGaragea.png" class="w-4 h-4 inline-block mr-1">
-            Chopshop
+            Sửa xe
         </div>
         <div class="bg-gray-700 text-sm text-gray-200 px-2 py-1 rounded-lg">
             <img src="/assets/mapicons/radar_hostpitala.png" class="w-4 h-4 inline-block mr-1">
-            Hospital
+            Bệnh viện
         </div>
         <div class="bg-gray-700 text-sm text-gray-200 px-2 py-1 rounded-lg">
             <img src="/assets/mapicons/radar_policea.png" class="w-4 h-4 inline-block mr-1">
-            Police Department
+            Sở cảnh sát
         </div>
         <div class="bg-gray-700 text-sm text-gray-200 px-2 py-1 rounded-lg">
             <img src="/assets/mapicons/radar_impounda.png" class="w-4 h-4 inline-block mr-1">
-            Dealership
+            Đại lý xe
         </div>
         <div class="bg-gray-700 text-sm text-gray-200 px-2 py-1 rounded-lg">
             <img src="/assets/mapicons/radar_spraya.png" class="w-4 h-4 inline-block mr-1">
-            Pay 'n' Spray
+            Sửa xe nhanh
         </div>
         <div class="bg-gray-700 text-sm text-gray-200 px-2 py-1 rounded-lg">
             <img src="/assets/mapicons/radar_trucka.png" class="w-4 h-4 inline-block mr-1">
-            Jobs
+            Việc làm
         </div>
         <div class="bg-gray-700 text-sm text-gray-200 px-2 py-1 rounded-lg">
             <img src="/assets/mapicons/radar_lighta.png" class="w-4 h-4 inline-block mr-1">
-            Realty Listings
+            Bất động sản
         </div>
         <div class="bg-gray-700 text-sm text-gray-200 px-2 py-1 rounded-lg">
             <img src="/assets/mapicons/radar_bulldozera.png" class="w-4 h-4 inline-block mr-1">
-            Scrapyard
+            Phế liệu
         </div>
 
     </div>
@@ -258,7 +258,7 @@
     google.maps.event.addListener(Turfs[{{ $zone->gz_sqlid }}], 'click', function (event) {
         var pos = SanMap.getPosFromLatLng(event.latLng);
         infoWindow.setPosition(SanMap.getLatLngFromPos(pos.x, pos.y));
-        infoWindow.setContent('<b>{{isset($factions[$zone->gz_faction]) ? $factions[$zone->gz_faction]->faction_name." Turf" : "Unknown Turf"}}</b>');
+        infoWindow.setContent('<b>{{isset($factions[$zone->gz_faction]) ? $factions[$zone->gz_faction]->faction_name." - Lãnh thổ" : "Lãnh thổ chưa xác định"}}</b>');
         infoWindow.open(map);
     });
 

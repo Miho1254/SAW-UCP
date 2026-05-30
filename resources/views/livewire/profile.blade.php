@@ -4,7 +4,7 @@ use Livewire\Attributes\{Layout, Title};
 use Livewire\Volt\Component;
 
 new
-#[Title('Profile')]
+#[Title('Hồ sơ')]
 #[Layout('layouts.app')]
 class extends Component {
 
@@ -35,14 +35,14 @@ class extends Component {
     <div class="p-6">
         <header>
             <h2 class="font-semibold text-2xl text-gray-200">
-                {{ __('My Account') }}
+                {{ __('Tài khoản của tôi') }}
             </h2>
-            <p class="text-gray-400">Manage your account's details.</p>
+            <p class="text-gray-400">Quản lý thông tin tài khoản của bạn.</p>
         </header>
 
         <div class="py-6">
             <h2 class="text-lg font-medium text-gray-200">
-                {{ __('Account Statistics') }}
+                {{ __('Thống kê tài khoản') }}
             </h2>
             <div
                 class="grid grid-cols-1 md:grid-cols-6 gap-0 border border-stroke-primary rounded-lg overflow-clip mt-2">
@@ -54,12 +54,12 @@ class extends Component {
                         @if(Auth::user()->is_admin())
                             <div class="text-orange-400 inline-flex items-center space-x-1">
                                     <x-heroicon-m-shield-check class="h-4 w-4"/>
-                                    <span class="text-sm">Administrator</span>
+                                    <span class="text-sm">Quản trị viên</span>
                             </div>
                         @else
                             <div class="text-gray-400 inline-flex items-center space-x-1">
                                 <x-heroicon-m-check-badge class="h-4 w-4"/>
-                                <span class="text-sm">Player</span>
+                                <span class="text-sm">Người chơi</span>
                             </div>
                         @endif
                     </div>
@@ -67,21 +67,21 @@ class extends Component {
                 <div
                     class="inline-flex items-center justify-center border-r border-stroke-primary bg-gray-900 py-2 md:py-0">
                     <div class="flex flex-col items-center justify-center">
-                        <span class="text-gray-200 font-semibold">{{$this->total_time_played ? : 'Unknown'}} Hours</span>
-                        <span class="text-gray-400 text-sm text-center">Total Time Played</span>
+                        <span class="text-gray-200 font-semibold">{{$this->total_time_played ? : 'Không xác định'}} Giờ</span>
+                        <span class="text-gray-400 text-sm text-center">Tổng thời gian chơi</span>
                     </div>
                 </div>
                 <div
                     class="inline-flex items-center justify-center border-r border-stroke-primary bg-gray-900 py-2 md:py-0">
                     <div class="flex flex-col items-center justify-center">
-                        <span class="text-gray-200 font-semibold">{{$this->most_active_character ? : 'Unknown'}}</span>
-                        <span class="text-gray-400 text-sm text-center">Most Active Character</span>
+                        <span class="text-gray-200 font-semibold">{{$this->most_active_character ? : 'Không xác định'}}</span>
+                        <span class="text-gray-400 text-sm text-center">Nhân vật hoạt động nhiều nhất</span>
                     </div>
                 </div>
                 <div class="inline-flex items-center justify-center bg-gray-900 py-2 md:py-0">
                     <div class="flex flex-col items-center justify-center">
-                        <span class="text-gray-200 font-semibold">{{$last_login ?  : 'Unknown'}}</span>
-                        <span class="text-gray-400 text-sm text-center">Last Login</span>
+                        <span class="text-gray-200 font-semibold">{{$last_login ?  : 'Không xác định'}}</span>
+                        <span class="text-gray-400 text-sm text-center">Lần đăng nhập cuối</span>
                     </div>
                 </div>
             </div>

@@ -7,7 +7,7 @@ use Livewire\Attributes\Validate;
 use App\Models\SkinData;
 
 new
-#[Title('Create a character')]
+#[Title('Tạo nhân vật')]
 #[Layout('layouts.app')]
 class extends Component {
 
@@ -152,20 +152,20 @@ class extends Component {
                             <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
                         </svg>
                     </div>
-                    <span class="text-gray-500 ">Please wait...</span>
+                    <span class="text-gray-500 ">Vui lòng đợi...</span>
                 </div>
             </div>
             <div wire:loading.remove class="space-y-4">
                 <div>
-                    <h2 class="text-gray-100 font-bold text-xl mb-2">Choose a skin</h2>
-                    <p class="text-gray-400">Results are shown based on your choice of gender and race. If the skin you are looking for isn’t present, it may be unavailable for your choices.</p>
+                    <h2 class="text-gray-100 font-bold text-xl mb-2">Chọn skin</h2>
+                    <p class="text-gray-400">Kết quả hiển thị dựa trên lựa chọn giới tính và chủng tộc của bạn. Nếu skin bạn tìm kiếm không có, có thể nó không khả dụng cho lựa chọn của bạn.</p>
                 </div>
                 <div class="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 max-h-96 rounded-lg overflow-y-scroll scrollbar-thin scrollbar-thumb-[#34353D] scrollbar-corner-rounded-full scrollbar-track-rounded-full scrollbar-thumb-rounded scrollbar-track-gray-800 p-1">
                     @forelse($skins as $skin)
                         <x-characters.skin-slot :skin="$skin" :wire:key="$skin->skin_id" />
                     @empty
                         <div class="mb-1 bg-gray-200">
-                            No skins found
+                            Không tìm thấy skin
                         </div>
                     @endforelse
                 </div>
@@ -189,15 +189,15 @@ class extends Component {
                                         <span class="font-semibold text-gray-300 text-lg group-hover:text-gray-100 transition">{{Str::limit($selected_skin->name, 24, '...')}}</span>
                                         <x-heroicon-m-arrow-top-right-on-square class="w-4 h-4 text-gray-300 group-hover:text-gray-100 transition" />
                                     </div>
-                                    <span class="text-gray-400 group-hover:text-gray-300 transition text-sm">Change Skin</span>
+                                    <span class="text-gray-400 group-hover:text-gray-300 transition text-sm">Đổi skin</span>
                                 </div>
                             @else
                                 <img src="{{ asset('assets/skins/no_skin.png') }}" alt="Character Slot" class="w-full h-auto">
                                 <div class="flex flex-col items-center">
                                     <div class="inline-flex items-center">
-                                        <span class="font-semibold text-gray-300 text-lg group-hover:text-gray-100 transition">No Skin</span>
+                                        <span class="font-semibold text-gray-300 text-lg group-hover:text-gray-100 transition">Không có skin</span>
                                     </div>
-                                    <span class="text-gray-400 group-hover:text-gray-300 transition text-sm">Change Skin</span>
+                                    <span class="text-gray-400 group-hover:text-gray-300 transition text-sm">Đổi skin</span>
                                 </div>
                             @endif
                         </button>
@@ -231,8 +231,8 @@ class extends Component {
                         <div class="w-full">
                             <x-input-label for="character_gender" :value="__('Gender')" />
                             <select wire:model.live="character_gender" id="character_gender" class="bg-form-input w-full mt-1 py-2 text-gray-200 placeholder:text-form-placeholder border-form-stroke focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="characterGender" required autofocus autocomplete="character_gender">
-                                <option value="1">Male</option>
-                                <option value="2">Female</option>
+                                <option value="1">Nam</option>
+                                <option value="2">Nữ</option>
                             </select>
                             <x-input-error :messages="$errors->get('character_gender')" class="mt-2" />
                         </div>
@@ -241,10 +241,10 @@ class extends Component {
                         <div class="w-full">
                             <x-input-label for="character_race" :value="__('Race')" />
                             <select wire:model.live="character_race" id="character_race" class="bg-form-input w-full mt-1 py-2 text-gray-200 placeholder:text-form-placeholder border-form-stroke focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="character_race" required autofocus autocomplete="character_race">
-                                <option value="0">White</option>
-                                <option value="1">Black</option>
-                                <option value="2">Latino</option>
-                                <option value="3">Asian</option>
+                                <option value="0">Trắng</option>
+                                <option value="1">Đen</option>
+                                <option value="2">Latin</option>
+                                <option value="3">Châu Á</option>
                             </select>
                             <x-input-error :messages="$errors->get('character_race')" class="mt-2" />
                         </div>
@@ -254,13 +254,13 @@ class extends Component {
                             <div class="w-full">
                                 <x-input-label for="character_race" :value="__('Hair')" />
                                 <select wire:model.live="character_hair" id="character_hair" class="bg-form-input w-full mt-1 py-2 text-gray-200 placeholder:text-form-placeholder border-form-stroke focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="character_hair" required autofocus autocomplete="character_hair">
-                                    <option value="0">None</option>
-                                    <option value="1">Black</option>
-                                    <option value="2">Brown</option>
-                                    <option value="3">Blonde</option>
-                                    <option value="4">White</option>
-                                    <option value="5">Gray</option>
-                                    <option value="6">Red</option>
+                                    <option value="0">Không</option>
+                                    <option value="1">Đen</option>
+                                    <option value="2">Nâu</option>
+                                    <option value="3">Vàng</option>
+                                    <option value="4">Trắng</option>
+                                    <option value="5">Xám</option>
+                                    <option value="6">Đỏ</option>
                                 </select>
                                 <x-input-error :messages="$errors->get('character_hair')" class="mt-2" />
                             </div>
@@ -269,12 +269,12 @@ class extends Component {
                             <div class="w-full">
                                 <x-input-label for="character_race" :value="__('Eyes')" />
                                 <select wire:model.live="character_eyes" id="character_eyes" class="bg-form-input w-full mt-1 py-2 text-gray-200 placeholder:text-form-placeholder border-form-stroke focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="character_eyes" required autofocus autocomplete="character_eyes">
-                                    <option value="0">Amber</option>
-                                    <option value="1">Blue</option>
-                                    <option value="2">Brown</option>
-                                    <option value="3">Gray</option>
-                                    <option value="4">Green</option>
-                                    <option value="5">Hazel</option>
+                                    <option value="0">Hổ phách</option>
+                                    <option value="1">Xanh dương</option>
+                                    <option value="2">Nâu</option>
+                                    <option value="3">Xám</option>
+                                    <option value="4">Xanh lá</option>
+                                    <option value="5">Nâu nhạt</option>
                                 </select>
                                 <x-input-error :messages="$errors->get('character_eyes')" class="mt-2" />
                             </div>
@@ -284,12 +284,12 @@ class extends Component {
                         <div class="w-full">
                             <x-input-label for="character_gender" :value="__('Body')" />
                             <select wire:model.live="character_body" id="character_body" class="bg-form-input w-full mt-1 py-2 text-gray-200 placeholder:text-form-placeholder border-form-stroke focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="character_body" required autofocus autocomplete="character_body">
-                                <option value="0">Skinny</option>
-                                <option value="1">Slim</option>
-                                <option value="2">Normal</option>
-                                <option value="3">Plump</option>
-                                <option value="4">Obese</option>
-                                <option value="5">Muscular</option>
+                                <option value="0">Gầy</option>
+                                <option value="1">Mảnh</option>
+                                <option value="2">Bình thường</option>
+                                <option value="3">Đầy đặn</option>
+                                <option value="4">Béo</option>
+                                <option value="5">Cơ bắp</option>
                             </select>
                             <x-input-error :messages="$errors->get('character_body')" class="mt-2" />
                         </div>

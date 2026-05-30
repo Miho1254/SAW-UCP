@@ -46,7 +46,7 @@ class LoginForm extends Form
 
         if ($user->Online != 0) {
             throw ValidationException::withMessages([
-                'form.account_name' => 'Tai khoan dang online trong game. Vui long thoat game truoc khi dang nhap UCP.',
+                'form.account_name' => 'Tài khoản đang online trong game. Vui lòng thoát game trước khi đăng nhập UCP.',
             ]);
         }
 

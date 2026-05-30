@@ -6,7 +6,7 @@ use App\Models\User;
 
 new
 #[Layout('layouts.app')]
-#[Title('Admin Record')]
+#[Title('Lý lịch quản trị')]
 class extends Component {
 
     public $adminRecords;
@@ -76,7 +76,7 @@ class extends Component {
             <div>
                 <div class="space-y-2 mb-6">
                     @if(count($activeRecords) > 0)
-                        <p class="text-[#F79046] font-semibold">You currently have active punishments.</p>
+                        <p class="text-[#F79046] font-semibold">Bạn hiện đang có hình phạt đang hiệu lực.</p>
                     @endif
                     @foreach($adminRecords as $record)
                        @if($record->active)
@@ -85,7 +85,7 @@ class extends Component {
                     @endforeach
                 </div>
                 <div>
-                    <p class="text-gray-500 font-medium mb-2">Previous Punishments <span class="text-gray-400">· {{count($adminRecords) - count($activeRecords) }}</span></p>
+                    <p class="text-gray-500 font-medium mb-2">Hình phạt trước đây <span class="text-gray-400">· {{count($adminRecords) - count($activeRecords) }}</span></p>
                     <div class="space-y-2">
                         @foreach($adminRecords as $record)
                             @if(!$record->active)

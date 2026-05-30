@@ -202,22 +202,21 @@ new class extends Component {
             @case(QuizSteps::QuizStepStart)
                 @if($displayError)
                     <div>
-                        <h2 class="text-gray-100 text-2xl text-center font-bold mb-2">Try Again</h2>
-                        <p class="text-gray-400 mb-6">Sorry, but you have not answered enough questions correctly to
-                            proceed. Please try again.</p>
-                        <x-primary-button wire:click="resetQuiz" class="w-full">Try Again</x-primary-button>
+                        <h2 class="text-gray-100 text-2xl text-center font-bold mb-2">Thử lại</h2>
+                        <p class="text-gray-400 mb-6">Xin lỗi, bạn chưa trả lời đúng đủ câu hỏi để tiếp tục. Vui lòng thử lại.</p>
+                        <x-primary-button wire:click="resetQuiz" class="w-full">Thử lại</x-primary-button>
                     </div>
                     {{--<div class="w-full p-2 bg-red-500/10 rounded-lg mb-4 border border-red-500 text-red-400 font-semibold">
                         Sorry, but you have not answered enough questions correctly to proceed. Please try again.
                     </div>--}}
                 @else
                     <div>
-                        <h2 class="text-gray-100 text-2xl text-center font-bold mb-2">Finish Registration</h2>
-                        <p class="text-gray-400 mb-6">To finish registration, you have to complete a short quiz about
-                            your experience with roleplay servers. <br><br> This is so we can get a simple assessment of
-                            your skills and therefore be able to offer you a better, more streamlined experience. This
-                            process is automated and does not require human examination, so it will not take long.</p>
-                        <x-primary-button wire:click="startQuiz" class="w-full">Start Quiz</x-primary-button>
+                        <h2 class="text-gray-100 text-2xl text-center font-bold mb-2">Hoàn tất đăng ký</h2>
+                        <p class="text-gray-400 mb-6">Để hoàn tất đăng ký, bạn phải hoàn thành một bài kiểm tra ngắn về
+                            kinh nghiệm chơi roleplay của bạn. <br><br> Điều này giúp chúng tôi đánh giá đơn giản về
+                            kỹ năng của bạn và từ đó mang lại trải nghiệm tốt hơn, mượt mà hơn cho bạn. Quá trình
+                            này được thực hiện tự động và không cần kiểm duyệt thủ công, nên sẽ không mất nhiều thời gian.</p>
+                        <x-primary-button wire:click="startQuiz" class="w-full">Bắt đầu bài kiểm tra</x-primary-button>
                     </div>
                 @endif
                 @break
@@ -260,10 +259,10 @@ new class extends Component {
                                                         </span>
                                             @endfor
                                         </div>
-                                        <span class="text-sm text-[#676974]">{{5 - $currentQuestion}} questions remaining</span>
+                                        <span class="text-sm text-[#676974]">{{5 - $currentQuestion}} câu hỏi còn lại</span>
                                     </div>
 
-                                    <x-primary-button type="submit" class="w-fit">Next Step</x-primary-button>
+                                    <x-primary-button type="submit" class="w-fit">Bước tiếp theo</x-primary-button>
                                 @endif
                             </form>
                         @endforeach
@@ -279,11 +278,11 @@ new class extends Component {
                             <span class="absolute mt-0.5 ml-3 text-lg text-[#6B6E7A] font-bold">/</span>
                             <span class="absolute mt-1 ml-5 text-lg text-[#6B6E7A] font-bold">2</span>
                         </div>
-                        <span class="text-gray-100 font-bold text-xl">English</span>
+                        <span class="text-gray-100 font-bold text-xl">Tiếng Anh</span>
                     </div>
                     <form class="flex flex-col space-y-4" wire:submit="submitEnglishQuestion">
                         <div class="flex flex-col">
-                            <h3 class="text-gray-100 font-semibold mb-3">Choose the correct sentence</h3>
+                            <h3 class="text-gray-100 font-semibold mb-3">Chọn câu đúng</h3>
                             <div class="flex items-center space-x-3 mb-2">
                                 <input type="radio" name="english_answer" id="english_answer-1" value="1"
                                        wire:model="englishAnswer" required
@@ -313,7 +312,7 @@ new class extends Component {
                                     with his friend.</label>
                             </div>
                         </div>
-                        <x-primary-button type="submit" class="w-fit">Next Step</x-primary-button>
+                        <x-primary-button type="submit" class="w-fit">Bước tiếp theo</x-primary-button>
                     </form>
                 </div>
                 @break
@@ -327,7 +326,7 @@ new class extends Component {
                             <span class="absolute mt-0.5 ml-3 text-lg text-[#6B6E7A] font-bold">/</span>
                             <span class="absolute mt-1 ml-5 text-lg text-[#6B6E7A] font-bold">2</span>
                         </div>
-                        <span class="text-gray-100 font-bold text-xl">English</span>
+                        <span class="text-gray-100 font-bold text-xl">Tiếng Anh</span>
                     </div>
                     <form class="flex flex-col space-y-4" wire:submit="submitEnglishTest">
                         <div class="flex flex-col">
@@ -341,36 +340,35 @@ new class extends Component {
                                       data-enable-grammarly="false"></textarea>
                             <span class="text-gray-500 text-sm">Minimum 64 characters (~10 words) per action.</span>
                         </div>
-                        <x-primary-button type="submit" class="w-fit">Finish Quiz</x-primary-button>
+                        <x-primary-button type="submit" class="w-fit">Hoàn thành bài kiểm tra</x-primary-button>
                     </form>
                 </div>
                 @break--}}
             @case(QuizSteps::QuizStepFinish)
                 <div>
-                    <h2 class="text-gray-100 text-2xl text-center font-bold mb-2">Congratulations!</h2>
-                    <p class="text-gray-400 mb-6">You have successfully passed the quiz. Your account now has full
-                        access to all features. Thank you for playing and have fun!</p>
-                    <x-primary-button wire:click="closeQuizModal" class="w-full">Thanks!</x-primary-button>
+                    <h2 class="text-gray-100 text-2xl text-center font-bold mb-2">Chúc mừng!</h2>
+                    <p class="text-gray-400 mb-6">Bạn đã vượt qua bài kiểm tra thành công. Tài khoản của bạn giờ đây có
+                        quyền truy cập đầy đủ tất cả tính năng. Cảm ơn bạn đã chơi và chúc bạn vui vẻ!</p>
+                    <x-primary-button wire:click="closeQuizModal" class="w-full">Cảm ơn!</x-primary-button>
                 </div>
                 @break
             @case(QuizSteps::QuizStepCooldown)
                 <div wire:poll>
-                    <h2 class="text-gray-100 text-2xl text-center font-bold mb-2">Quiz Cooldown</h2>
-                    <p class="text-gray-400 mb-6">Sorry, but because you have failed multiple quizzes in a row, there
-                        has been a cooldown applied to your account.</p>
+                    <h2 class="text-gray-100 text-2xl text-center font-bold mb-2">Thời gian chờ kiểm tra</h2>
+                    <p class="text-gray-400 mb-6">Xin lỗi, vì bạn đã trượt nhiều bài kiểm tra liên tiếp, tài khoản
+                        của bạn đã bị áp dụng thời gian chờ.</p>
                     @if(auth()->user()->QuizCooldown < now())
-                        <x-primary-button wire:click="closeQuizModal" class="w-full">Try Again</x-primary-button>
+                        <x-primary-button wire:click="closeQuizModal" class="w-full">Thử lại</x-primary-button>
                     @else
-                        <p class="text-gray-400 mb-6">It will expire in {{auth()->user()->QuizCooldown->diffForHumans()}}</p>
+                        <p class="text-gray-400 mb-6">Thời gian chờ sẽ hết hạn trong {{auth()->user()->QuizCooldown->diffForHumans()}}</p>
                     @endif
                 </div>
                 @break
             @default
                 <div>
-                    <h2 class="text-gray-100 text-2xl text-center font-bold mb-2">Try Again</h2>
-                    <p class="text-gray-400 mb-6">Sorry, but you have not answered enough questions correctly to
-                        proceed. Please try again.</p>
-                    <x-primary-button wire:click="resetQuiz" class="w-full">Try Again</x-primary-button>
+                    <h2 class="text-gray-100 text-2xl text-center font-bold mb-2">Thử lại</h2>
+                    <p class="text-gray-400 mb-6">Xin lỗi, bạn chưa trả lời đúng đủ câu hỏi để tiếp tục. Vui lòng thử lại.</p>
+                    <x-primary-button wire:click="resetQuiz" class="w-full">Thử lại</x-primary-button>
                 </div>
                 @break
         @endswitch

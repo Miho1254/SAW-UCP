@@ -4,7 +4,7 @@ use Livewire\Attributes\{Layout, Title};
 use Livewire\Volt\Component;
 
 new
-#[Title('Feature Voting')]
+#[Title('Bình chọn tính năng')]
 #[Layout('layouts.app')]
 class extends Component {
 
@@ -20,7 +20,7 @@ class extends Component {
                 <h1 class="text-2xl font-bold text-gray-200">{{ __('Feature Voting') }}</h1>
                 <div class="inline-flex items-center space-x-1 rounded-lg px-2 py-1 bg-yellow-300/10">
                     <x-heroicon-s-archive-box class="w-5 h-5 text-yellow-300" />
-                    <p class="text-yellow-300">You have <b>0 votes</b> left</p>
+                    <p class="text-yellow-300">Bạn còn <b>0 phiếu bầu</b></p>
                 </div>
             </div>
             <div class="grid grid-cols-1 gap-3">

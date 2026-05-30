@@ -4,7 +4,7 @@ use Livewire\Attributes\{Layout, Title};
 use Livewire\Volt\Component;
 
 new
-#[Title('Connections')]
+#[Title('Kết nối')]
 #[Layout('layouts.app')]
 class extends Component {
 
@@ -19,7 +19,7 @@ class extends Component {
 
             if (isset($this->connection_data[$conn->ip_address])) {
 
-                if ($this->connection_data[$conn->ip_address]['location'] != 'Loading...')
+                if ($this->connection_data[$conn->ip_address]['location'] != 'Đang tải...')
                     continue;
             }
 
@@ -28,7 +28,7 @@ class extends Component {
 
                 if (!$api_data || $api_data->status == 'fail') {
                     $this->connection_data[$conn->ip_address] = [
-                        'location' => 'Unknown Location',
+                        'location' => 'Vị trí không xác định',
                         'picture' => 'assets/4x3-xx.svg',
                         'live' => false,
                     ];
@@ -53,16 +53,16 @@ class extends Component {
 
     public function getConnectionTime($connection_timestamp)
     {
-        if (!$connection_timestamp) return 'Unknown';
+            if (!$connection_timestamp) return 'Không xác định';
 
         try {
             $carbon = \Carbon\Carbon::parse($connection_timestamp);
             if ($carbon->isAfter(now()->subMinute())) {
-                return 'Just now';
+                return 'Vừa xong';
             }
             return $carbon->diffForHumans();
         } catch (\Exception $e) {
-            return 'Unknown';
+            return 'Không xác định';
         }
     }
 
@@ -73,7 +73,7 @@ class extends Component {
 
         foreach ($this->connections as $connection) {
             $this->connection_data[$connection->ip_address] = [
-                'location' => 'Loading...',
+                'location' => 'Đang tải...',
                 'picture' => 'assets/4x3-xx.svg',
                 'live' => false,
             ];
@@ -114,7 +114,7 @@ class extends Component {
                             <div class="inline-flex items-center">
                                 <div wire:init="getConnectionData" class="mr-2">
                                     <template x-if="!showIp">
-                                        <span class="text-white font-semibold">Hidden Location</span>
+                                        <span class="text-white font-semibold">Vị trí ẩn</span>
                                     </template>
                                     <div class="h-8 w-fit inline-flex items-center" x-show="showIp">
                                         <img class="rounded-sm mr-2" src="{{ asset(strtolower($connection_data[$connection->ip_address]['picture']))}}" width="16"/>
@@ -124,16 +124,16 @@ class extends Component {
                                 <span class="text-gray-400 text-sm mr-2">·</span>
                                 <span class="text-gray-400 text-sm">{{$this->getConnectionTime($connection->created_at)}}</span>
                             </div>
-                            <span class="text-gray-600 text-sm font-semibold">{{$connection->is_web ? 'UCP Connection' : 'In-Game Connection'}}</span>
+                            <span class="text-gray-600 text-sm font-semibold">{{$connection->is_web ? 'Kết nối UCP' : 'Kết nối trong game'}}</span>
                         </div>
                     </div>
                     @empty
-                    <p class="w-full text-gray-600">No connections for this account found.</p>
+                    <p class="w-full text-gray-600">Không tìm thấy kết nối nào cho tài khoản này.</p>
                 @endforelse
             </div>
             @if($connections->count() > 0)
                 <div class="w-full">
-                    <p class="text-right w-full text-gray-600 text-sm">Showing your last 10 connections</p>
+                    <p class="text-right w-full text-gray-600 text-sm">Hiển thị 10 kết nối gần nhất</p>
                 </div>
                 <div class="mt-2">
                     <h2 class="text-lg font-medium text-gray-200">

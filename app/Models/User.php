@@ -4,10 +4,14 @@ namespace App\Models;
 
 use App\Models\Character\Character;
 use App\Models\User\AdminRecord;
+use App\Models\Vehicle;
+use App\Models\House;
+use App\Models\Ban;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -61,6 +65,36 @@ class User extends Authenticatable implements FilamentUser, HasName
     public function connections(): HasMany
     {
         return $this->hasMany(Connection::class, 'account_id', 'id');
+    }
+
+    public function vehicles(): HasMany
+    {
+        return $this->hasMany(Vehicle::class, 'sqlID', 'id');
+    }
+
+    public function houses(): HasMany
+    {
+        return $this->hasMany(House::class, 'OwnerID', 'id');
+    }
+
+    public function businesses(): HasMany
+    {
+        return $this->hasMany(Business::class, 'OwnerID', 'id');
+    }
+
+    public function bans(): HasMany
+    {
+        return $this->hasMany(Ban::class, 'user_id', 'id');
+    }
+
+    public function faction(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Faction::class, 'Member', 'id');
+    }
+
+    public function getActiveBanAttribute()
+    {
+        return $this->bans()->where('status', 1)->first();
     }
 
     public function is_admin(): bool

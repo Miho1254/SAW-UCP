@@ -48,19 +48,18 @@ new class extends Component {
                      class="bg-gray-800 rounded-t-lg border-x border-t border-stroke-primary @if($update->image) p-5 @else px-5 pt-5 pb-1 @endif space-y-3">
                     <div class="inline-flex items-center justify-between w-full">
                         <div>
-                            <span class="bg-[#83B41C]/25 font-ibm text-[#83B41C] font-bold tracking-widest text-xs rounded-full py-0.5 px-2">FEATURE OVERVIEW</span>
+                            <span class="bg-[#83B41C]/25 font-ibm text-[#83B41C] font-bold tracking-widest text-xs rounded-full py-0.5 px-2">TỔNG QUAN TÍNH NĂNG</span>
                         </div>
                         <span
                             class="text-[#666666] text-sm text-semibold ">{{$update->author}} · {{$update->created_at->diffForHumans()}}</span>
                     </div>
-                    <a href="{{route('update.view', $update->slug)}}" class="inline-flex items-center space-x-2"
-                       wire:navigate>
+                    <a href="{{route('update.view', $update->slug)}}" class="inline-flex items-center space-x-2" wire:navigate>
                         <h2 class="text-white font-manrope text-2xl font-semibold">{{$update->title}}</h2>
                         <x-heroicon-m-arrow-right class="w-5 h-5 text-gray-400 inline-block align-middle"/>
                     </a>
                 </div>
                 @if($update->image)
-                    <a href="{{route('update.view', $update->slug)}}" wire:navigate>
+                    <a href="{{route('update.view', $update->slug)}}" wire:navigate>>
                         <img src="{{$update->image}}" alt="{{$update->title}}" class="w-full h-96 object-cover">
                     </a>
                 @endif
@@ -71,11 +70,11 @@ new class extends Component {
                     </div>
                     <div class="inline-flex items-center justify-between w-full">
                         <a href="{{route('update.view', $update->slug)}}"
-                           class="text-blue-400 hover:text-blue-300 transition" wire:navigate>View full post</a>
+                           class="text-blue-400 hover:text-blue-300 transition" wire:navigate>Xem bài đầy đủ</a>
                         <a href="#"
                            class="inline-flex space-x-1 items-center text-gray-500 hover:text-gray-400 transition">
                             <x-heroicon-o-link class="w-4 h-4"/>
-                            <span class="text-sm">Copy Link</span>
+                            <span class="text-sm">Sao chép liên kết</span>
                         </a>
                     </div>
                 </div>
@@ -88,7 +87,7 @@ new class extends Component {
                     <div class="inline-flex items-center justify-between w-full">
                         <div>
                             <span
-                                class="bg-orange-500/25 font-ibm text-orange-500 font-bold tracking-widest text-xs rounded-full py-0.5 px-2">GAME UPDATE</span>
+                                class="bg-orange-500/25 font-ibm text-orange-500 font-bold tracking-widest text-xs rounded-full py-0.5 px-2">CẬP NHẬT GAME</span>
                         </div>
                         <span
                             class="text-[#666666] text-sm text-semibold ">{{$update->author}} · {{$update->created_at->diffForHumans()}}</span>
@@ -99,15 +98,15 @@ new class extends Component {
                     </div>
                     <div class="inline-flex items-center justify-between w-full">
                         <button x-show="!open" @click="open = ! open"
-                                class="text-blue-400 hover:text-blue-300 transition">Show changelog
+                                class="text-blue-400 hover:text-blue-300 transition">Hiện nhật ký thay đổi
                         </button>
                         <button x-show="open" @click="open = ! open"
-                                class="text-blue-400 hover:text-blue-300 transition">Hide changelog
+                                class="text-blue-400 hover:text-blue-300 transition">Ẩn nhật ký thay đổi
                         </button>
-                        <a href="#"
+                         <a href="#"
                            class="inline-flex space-x-1 items-center text-gray-500 hover:text-gray-400 transition">
                             <x-heroicon-o-link class="w-4 h-4"/>
-                            <span class="text-sm">Copy Link</span>
+                            <span class="text-sm">Sao chép liên kết</span>
                         </a>
                     </div>
                 </div>
@@ -121,7 +120,7 @@ new class extends Component {
                         <div>
                             <div class="text-green-500 inline-flex items-center space-x-1">
                                 <x-heroicon-m-plus-circle class="w-5 h-5"/>
-                                <h3 class="font-bold tracking-wide">ADDITIONS</h3>
+                                <h3 class="font-bold tracking-wide">THÊM MỚI</h3>
                             </div>
                             <div class="text-gray-400 list-disc uses_discs ml-2">
                                 {!! $added !!}
@@ -132,7 +131,7 @@ new class extends Component {
                         <div>
                             <div class="text-blue-400 inline-flex items-center space-x-1">
                                 <x-heroicon-m-pencil-square class="w-5 h-5"/>
-                                <h3 class="font-bold tracking-wide">CHANGES</h3>
+                                <h3 class="font-bold tracking-wide">THAY ĐỔI</h3>
                             </div>
                             <div class="text-gray-400 list-disc uses_discs ml-2">
                                 {!! $changed !!}
@@ -143,7 +142,7 @@ new class extends Component {
                         <div>
                             <div class="text-orange-500 inline-flex items-center space-x-1">
                                 <x-heroicon-m-bug-ant class="w-5 h-5"/>
-                                <h3 class="font-bold tracking-wide">FIXES</h3>
+                                <h3 class="font-bold tracking-wide">SỬA LỖI</h3>
                             </div>
                             <div class="text-gray-400 list-disc uses_discs ml-2">
                                 {!! $fixed !!}
@@ -154,7 +153,7 @@ new class extends Component {
                         <div>
                             <div class="text-red-500 inline-flex items-center space-x-1">
                                 <x-heroicon-m-trash class="w-5 h-5"/>
-                                <h3 class="font-bold tracking-wide">REMOVED</h3>
+                                <h3 class="font-bold tracking-wide">ĐÃ XÓA</h3>
                             </div>
                             <div class="text-gray-400 list-disc uses_discs ml-2">
                                 {!! $removed !!}

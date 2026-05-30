@@ -17,7 +17,7 @@ new class extends Component {
 
     public function mount(): void
     {
-        $this->online = \App\Helpers\SampQueryAPI::getServerPlayerCount();
+        $this->online = Cache::get('current_player_count', -1);
 
         if ($this->online == -1) {
             $this->online = 0;
@@ -31,31 +31,31 @@ new class extends Component {
         $this->data = array(
             'online' => [
                 'count' => $this->online,
-                'label' => 'Online Players',
+                'label' => 'Người chơi trực tuyến',
                 'icon' => 'heroicon-s-users',
                 'live' => true,
             ],
             'registered' => [
                 'count' => $this->registered,
-                'label' => 'Registered Players',
+                'label' => 'Người chơi đã đăng ký',
                 'icon' => 'heroicon-s-user-group',
                 'live' => false,
             ],
             'vehicles' => [
                 'count' => $this->vehicles,
-                'label' => 'Vehicles',
+                'label' => 'Phương tiện',
                 'icon' => 'heroicon-s-truck',
                 'live' => false,
             ],
             'properties' => [
                 'count' => $this->properties,
-                'label' => 'Properties',
+                'label' => 'Bất động sản',
                 'icon' => 'heroicon-s-home-modern',
                 'live' => false,
             ],
             'businesses' => [
                 'count' => $this->businesses,
-                'label' => 'Businesses',
+                'label' => 'Doanh nghiệp',
                 'icon' => 'heroicon-s-building-storefront',
                 'live' => false,
             ],

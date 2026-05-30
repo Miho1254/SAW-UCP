@@ -14,7 +14,7 @@ use function Livewire\Volt\{state};
 
         <p class="mt-1 text-sm text-gray-400">
             {{ __('Link your Discord account for another layer of security and to receive account alerts directly in your DMs.') }}
-            <span class="text-gray-500">2FA Required</span>
+            <span class="text-gray-500">Yêu cầu 2FA</span>
         </p>
     </header>
 
