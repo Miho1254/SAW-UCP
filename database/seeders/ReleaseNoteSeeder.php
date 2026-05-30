@@ -3,19 +3,166 @@
 namespace Database\Seeders;
 
 use App\Models\ReleaseNote;
-use Database\Factories\ReleaseNoteFactory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class ReleaseNoteSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        ReleaseNote::factory()
-            ->count(25)
-            ->create();
+        ReleaseNote::query()->delete();
+
+        $notes = [
+            [
+                'title' => 'UCP Registration + Fix Stuck System',
+                'slug' => 'ucp-registration-fixstuck-20260530',
+                'type' => 'game',
+                'inline' => true,
+                'author' => 'Miho',
+                'description' => 'Player mới phải đăng ký trên UCP trước khi vào game. Thêm hệ thống Fix Kẹt cho player bị crash/stuck.',
+                'content' => '',
+                'added' => "- Redirect đăng ký in-game → UCP (`my.saw-mp.com`) — player chưa có account sẽ thấy dialog hướng dẫn đăng ký trên web, sau đó bị kick\n- Thêm `MAINMENU4` dialog (ID 82) cho thông báo redirect UCP\n- Hệ thống **Fix Kẹt**: Player bị kẹt/crash → vào UCP bấm nút → reconnect → teleport về vị trí an toàn (-2401.74, 575.59, 24.89)\n- Thêm `pFixStuck` vào PlayerInfo enum + DB loading trong `AUTH_THREAD`",
+                'changed' => null,
+                'fixed' => null,
+                'removed' => "- Đăng ký tài khoản in-game (nay chuyển sang UCP)",
+                'status' => 'published',
+                'published_at' => '2026-05-30 15:00:00',
+                'created_at' => '2026-05-30 15:00:00',
+            ],
+            [
+                'title' => 'Anti-Cheat: Cho phép ReShade',
+                'slug' => 'allow-reshade-20260529',
+                'type' => 'game',
+                'inline' => true,
+                'author' => 'Miho',
+                'description' => 'Cập nhật anti-cheat để không block ReShade — mod đồ họa phổ biến cho GTA San Andreas.',
+                'content' => '',
+                'added' => null,
+                'changed' => "- Cập nhật filterscript `antycheat.pwn` để bỏ qua ReShade",
+                'fixed' => null,
+                'removed' => null,
+                'status' => 'published',
+                'published_at' => '2026-05-29 12:00:00',
+                'created_at' => '2026-05-29 12:00:00',
+            ],
+            [
+                'title' => 'Hệ thống đào khoáng AFK',
+                'slug' => 'afk-mining-20260527',
+                'type' => 'game',
+                'inline' => true,
+                'author' => 'Miho',
+                'description' => 'Thêm hệ thống đào khoáng sản tự động (AFK-friendly) với 56 điểm trên map.',
+                'content' => '',
+                'added' => "- Module `afk_mining.inc` (~412 dòng)\n- 56 điểm khoáng sản trên map\n- 5 loại khoáng sản: Bạc, Niken, Vàng, Đồng, Crom\n- AFK-friendly: Tự động đào khi đứng gần điểm khoáng sản\n- Tích hợp với adventure system (EXP) và stats",
+                'changed' => null,
+                'fixed' => null,
+                'removed' => null,
+                'status' => 'published',
+                'published_at' => '2026-05-27 02:00:00',
+                'created_at' => '2026-05-27 02:00:00',
+            ],
+            [
+                'title' => 'Cướp ATM & Business + Hunger System + Trom Xe',
+                'slug' => 'robbery-hunger-tromxe-20260526',
+                'type' => 'game',
+                'inline' => true,
+                'author' => 'Miho',
+                'description' => 'Hệ thống cướp ATM/cửa hàng 24/7, cải tiến hunger & thirst, thêm job xe trộm, speedometer mới.',
+                'content' => '',
+                'added' => "- **Hệ thống cướp ATM & 24/7 Business**:\n  - `/robatm`: Cướp ATM (cần Picklock), reward $35k-70k Dirty Money\n  - `/robbiz`: Cướp cửa hàng 24/7, reward $60k-110k Dirty Money\n  - `/cancelrob`: Hủy cướp, `/gpsatm`/`/gpsbiz`: GPS cho cảnh sát\n  - Flow: 10s crack phase → alarm LSPD → 3 phút collect\n  - Điều kiện: 2+ cops online, +2 Wanted stars, cooldown 15p/player\n- **Job Xe trộm (Trom Xe)**: `/tromxe` — bẻ khóa xe, trộm, bán. Cần Picklock (2000 Mats)\n- **Speedometer mới**: 29-layer premium TextDraw system",
+                'changed' => "- **Hunger & Thirst**: Icon-based UI, biz food recovery (ăn tại nhà hàng), low hunger slip/fall penalty\n- Announce family locker material usage khi sử dụng",
+                'fixed' => "- Fix MySQL 2013 connection lost trong DynVeh_Spawn\n- Fix duplicate hook OnGameModeInit trong robbery.inc\n- Fix vũ khí equipped (standard/LAW) bị mất khi chết",
+                'removed' => null,
+                'status' => 'published',
+                'published_at' => '2026-05-26 14:00:00',
+                'created_at' => '2026-05-26 14:00:00',
+            ],
+            [
+                'title' => 'Fix Fisherman + Hệ thống cần sa',
+                'slug' => 'fisherman-cannabis-20260525',
+                'type' => 'game',
+                'inline' => true,
+                'author' => 'Miho',
+                'description' => 'Fix luồng bán cá cho nghề câu cá. Thêm hệ thống trồng và bán cần sa.',
+                'content' => '',
+                'added' => "- **Hệ thống cần sa (Cannabis)**: Module `cannabis.inc` (~441 dòng) — trồng, thu hoạch, bán. Tích hợp inventory system",
+                'changed' => null,
+                'fixed' => "- Fix fisherman fish selling flow",
+                'removed' => null,
+                'status' => 'published',
+                'published_at' => '2026-05-25 18:00:00',
+                'created_at' => '2026-05-25 18:00:00',
+            ],
+            [
+                'title' => 'Balo System Polish + Login Audio + LAW Weapons',
+                'slug' => 'balo-polish-law-20260521',
+                'type' => 'game',
+                'inline' => true,
+                'author' => 'Miho',
+                'description' => 'Hoàn thiện hệ thống balo: give, stack, notify, quick use. Thêm nhạc nền đăng nhập. Unlock LAW weapons.',
+                'content' => '',
+                'added' => "- **Login background audio** (30% volume)\n- **Give item**: Cho item từ balo cho player khác\n- **Stack items**: Gộp items cùng loại vào 1 slot\n- **Notify**: Thông báo khi nhận item mới\n- **Quick use**: Sử dụng nhanh item từ balo\n- Unlock M4 LAW và AK LAW trong locker",
+                'changed' => null,
+                'fixed' => "- Fix 5 bugs + 7 UX improvements + 2 hidden bugs từ self-audit\n- Sync ammo từ equip tab về bag khi unequip và khi chết\n- Fix 10 critical/high bugs từ exhaustive audit",
+                'removed' => null,
+                'status' => 'published',
+                'published_at' => '2026-05-21 23:00:00',
+                'created_at' => '2026-05-21 23:00:00',
+            ],
+            [
+                'title' => 'Hệ thống Inventory/Balo — Port từ Rgame2018',
+                'slug' => 'inventory-balo-20260520',
+                'type' => 'game',
+                'inline' => true,
+                'author' => 'Miho',
+                'description' => 'Port toàn bộ hệ thống inventory (~4700 dòng, 14 modules) từ Rgame2018. LAW weapons 10.9x damage. Death system anti-exploit.',
+                'content' => 'Hệ thống balo hoàn toàn mới, port từ server Rgame2018 với 14 modules tích hợp.',
+                'added' => "- **Hệ thống Inventory/Balo** (~4700 dòng code mới, 14 modules):\n  - `inventory.inc` — 84 slots tab chính + 7 slots tab vũ khí\n  - `guide.inc` — Guide system (3 tabs)\n  - `cac.inc` — PlayerData enum (GP, Coin, EA, FoodBar, WaterBar)\n  - `hunger-system.inc` — Thanh thức ăn/nước\n  - `adventure.inc` — EXP Adventure progress bar\n  - `tradenewitem.inc`, `sellgunnew.inc`, `drop_pick_item.inc`, `craftweapon.inc`\n  - `gs-utils.inc`, `famed-mission.inc`, `new_stats.inc`, `oocshop.inc`, `useitemgain.inc`\n- **LAW Weapons**: Sát thương 10.9x, tag [LAW] trong damage log\n- `/lawlocker`: Lệnh lấy vũ khí LAW từ faction locker\n- Merge LAW Weapons vào group locker dialog\n- Ammo box interaction với vũ khí đang equip\n- Hiển thị trạng thái equipped trong balo + unequip\n- Lệnh `/balo` (đổi tên từ `/tuido`), hotkey H\n- Mapping SAPD + SFA filterscripts",
+                'changed' => "- Bỏ custom DFF/TXD, chuyển balo sang pure dialog UI\n- Pizza Boy: bỏ cooldown, min distance 200m, range 500m, +50% delivery time\n- Crime system: stars 1-6, tablist headers, hỗ trợ khoảng trắng trong tên",
+                'fixed' => "- Death system anti-ESC bug (force anim + strip weapon)\n- Block IC chat khi dead\n- Fall out of world → auto hospital\n- Fix arrest teleport đến đúng vị trí IC prison\n- Fix gRival SaveString→SaveInteger cho MySQL strict mode\n- Fix artwork paths cho open.mp HTTP server\n- Remove crashdetect plugin, stub PrintBacktrace cho open.mp\n- Fix INSERT IGNORE cho inventory\n- Fix GetPlayerConfigAccount infinite loop\n- Fix 6 UX improvements cho balo dialog",
+                'removed' => "- Crashdetect plugin (không tương thích open.mp)",
+                'status' => 'published',
+                'published_at' => '2026-05-20 23:00:00',
+                'created_at' => '2026-05-20 23:00:00',
+            ],
+            [
+                'title' => 'Việt hóa + Death System + Admin Commands',
+                'slug' => 'viet-hoa-death-system-20260519',
+                'type' => 'game',
+                'inline' => true,
+                'author' => 'Miho',
+                'description' => 'Ngày đầu tiên: Việt hóa toàn diện (~170 aliases), hệ thống chết (Dead state), lệnh tạo family/faction, refactor newbie weapon limits.',
+                'content' => 'Bản cập nhật đầu tiên sau khi migration sang open.mp. Việt hóa toàn diện hệ thống commands và thêm nhiều tính năng gameplay mới.',
+                'added' => "- **Việt hóa toàn diện**: Admin, login, spec, damage, group, ~170 alias tiếng Việt (`SafeRegAlias`)\n- **Hệ thống chết (Dead state)**: VIP 80s/0s, Non-VIP 180s/300s, hiển thị thời gian, block EMS, god mode khi dead\n- `/createfamily`, `/createfaction` với alias tiếng Việt (taofamily, taofaction, themtoi, xoatoi)\n- `/addcrime`, `/deletecrime` cho hệ thống tội phạm động\n- Fix newbie announce dùng `IsPlayerNewbie` (pConnectHours)",
+                'changed' => "- Refactor giới hạn súng newbie: gộp 20+ file → 4 stock functions, giảm 330 dòng code lặp\n- Thêm `.gitignore`, xóa binary/runtime files (1178 → 337 files)",
+                'fixed' => "- Fix sscanf thiếu default value trong /ddedit, /hedit, /gedit, /shop, /editevent\n- Fix ddFaction default: 0 → INVALID_GROUP_ID (-1)\n- Fix /garbagerun không đăng ký\n- Fix garbage job: random(5)→random(9), thêm cleanup\n- Fix groupid off-by-one trong turf/poll\n- Fix safe zone",
+                'removed' => null,
+                'status' => 'published',
+                'published_at' => '2026-05-19 23:00:00',
+                'created_at' => '2026-05-19 23:00:00',
+            ],
+            [
+                'title' => 'SAW Community — Ra mắt trên open.mp',
+                'slug' => 'infrastructure-openmp',
+                'type' => 'release',
+                'inline' => false,
+                'author' => 'Miho',
+                'description' => 'Server migration từ SA-MP gốc sang **open.mp v1.5.8**. Nền tảng mới với 24 components, hỗ trợ custom models tốt hơn, và hệ thống plugin legacy.',
+                'content' => "SAW Community chính thức chạy trên nền tảng open.mp thay vì SA-MP server gốc.\n\n**Thay đổi infrastructure:**\n- Server: open.mp v1.5.8.3079 (omp-server.exe)\n- Config: `config.json` thay vì `server.cfg`\n- 24 open.mp components: Actors, Checkpoints, Classes, Dialogs, GangZones, Vehicles, Timers, Variables, CustomModels, Pawn, v.v.\n- Plugins legacy: mysql (R41-3), sscanf (2.8.2), gvar, streamer (2.9.4), Whirlpool, Pawn.CMD (3.4.0), Pawn.RakNet (1.6.0)\n- Database: MySQL `nggv3` trên localhost\n- Website: UCP tại `my.saw-mp.com` (Laravel + Livewire + Volt)",
+                'added' => null,
+                'changed' => null,
+                'fixed' => null,
+                'removed' => null,
+                'status' => 'published',
+                'published_at' => '2026-05-19 00:00:00',
+                'created_at' => '2026-05-19 00:00:00',
+            ],
+        ];
+
+        foreach ($notes as $note) {
+            ReleaseNote::create(array_merge($note, [
+                'image' => null,
+            ]));
+        }
     }
 }
