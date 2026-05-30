@@ -1,1 +1,1 @@
-<img src="{{ asset('assets/logos/logo_small.webp') }}" {{ $attributes }} alt="SOLS Logo" />
+<img src="{{ asset('logo.png') }}" {{ $attributes }} alt="SAW Community Logo" />
