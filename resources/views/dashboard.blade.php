@@ -59,6 +59,47 @@
         <div class="md:col-span-8 w-full space-y-8">
             <livewire:components.dashboard-announcements/>
 
+            @php
+                $updates = \App\Models\ReleaseNote::orderBy('created_at', 'desc')->limit(5)->get();
+            @endphp
+
+            <div class="bg-gray-900 rounded-lg border border-stroke-primary p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-semibold text-gray-200 flex items-center space-x-2">
+                        <x-heroicon-m-bell class="w-5 h-5 text-orange-400" />
+                        <span>Ghi chú phát hành</span>
+                    </h2>
+                    <a href="{{ route('updates') }}" class="text-sm text-blue-400 hover:text-blue-300 transition" wire:navigate>Xem tất cả</a>
+                </div>
+                @if($updates->isEmpty())
+                    <p class="text-sm text-gray-500">Chưa có cập nhật nào.</p>
+                @else
+                <div class="space-y-3">
+                    @foreach($updates as $update)
+                    <a href="{{ route('update.view', $update->slug) }}" class="block bg-gray-800 hover:bg-gray-750 rounded-lg border border-stroke-primary p-4 transition group" wire:navigate>
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center space-x-2 mb-1">
+                                    @if($update->type === 'release')
+                                        <span class="bg-green-500/25 text-green-400 text-xs font-bold px-2 py-0.5 rounded-full">PHÁT HÀNH</span>
+                                    @else
+                                        <span class="bg-orange-500/25 text-orange-400 text-xs font-bold px-2 py-0.5 rounded-full">GAME</span>
+                                    @endif
+                                    <span class="text-xs text-gray-500">{{ $update->created_at->diffForHumans() }}</span>
+                                </div>
+                                <h3 class="text-sm font-semibold text-gray-200 group-hover:text-white transition truncate">{{ $update->title }}</h3>
+                                @if($update->description)
+                                    <p class="text-xs text-gray-400 mt-1 line-clamp-2">{{ Str::limit(strip_tags($update->description), 120) }}</p>
+                                @endif
+                            </div>
+                            <x-heroicon-m-chevron-right class="w-4 h-4 text-gray-600 group-hover:text-gray-400 flex-shrink-0 mt-1 ml-3 transition" />
+                        </div>
+                    </a>
+                    @endforeach
+                </div>
+                @endif
+            </div>
+
             <div class="bg-gray-900 rounded-lg border border-stroke-primary p-6">
                 <h2 class="text-lg font-semibold text-gray-200 mb-4 flex items-center space-x-2">
                     <x-heroicon-s-book-open class="w-5 h-5 text-blue-400" />
@@ -81,55 +122,6 @@
                         <h3 class="font-semibold text-gray-200 mb-1">Bước 4: Tạo nhân vật</h3>
                         <p class="text-gray-400">Lần đầu vào game, hệ thống sẽ hướng dẫn bạn chọn giới tính, ngoại hình và hoàn thành tutorial.</p>
                     </div>
-                </div>
-            </div>
-
-            <div class="bg-gray-900 rounded-lg border border-stroke-primary p-6">
-                <h2 class="text-lg font-semibold text-gray-200 mb-4 flex items-center space-x-2">
-                    <x-heroicon-s-question-mark-circle class="w-5 h-5 text-yellow-400" />
-                    <span>Câu hỏi thường gặp</span>
-                </h2>
-                <div class="space-y-4" x-data="{ openFaq: null }">
-                    @php
-                    $faqs = [
-                        ['q' => 'Tôi không thể đăng nhập trong game?', 'a' => 'Đảm bảo bạn đã đăng ký trên UCP này trước. Tên đăng nhập trong game phải trùng với tên tài khoản trên UCP.'],
-                        ['q' => 'Tôi quên mật khẩu?', 'a' => 'Sử dụng tính năng "Quên mật khẩu" tại trang đăng nhập để đặt lại mật khẩu qua email.'],
-                        ['q' => 'SA-MP là gì? Tôi cần tải ở đâu?', 'a' => 'SA-MP (San Andreas Multiplayer) là mod chơi multiplayer cho GTA San Andreas. Tải tại www.sa-mp.mp/downloads'],
-                        ['q' => 'Tôi cần cài GTA San Andreas trước không?', 'a' => 'Có, bạn cần có GTA San Andreas đã cài đặt trên máy tính trước khi cài SA-MP.'],
-                        ['q' => 'Tên nhân vật có quy tắc gì?', 'a' => 'Tên phải theo định dạng Họ_Tên (ví dụ: Nguyen_Van_A). Không được dùng tên người nổi tiếng, từ ngữ không phù hợp.'],
-                    ];
-                    @endphp
-                    @foreach($faqs as $i => $faq)
-                    <div class="border border-gray-700 rounded-lg overflow-hidden">
-                        <button @click="openFaq === {{ $i }} ? openFaq = null : openFaq = {{ $i }}" class="w-full text-left p-4 flex items-center justify-between hover:bg-gray-800/50 transition">
-                            <span class="text-sm font-medium text-gray-200">{{ $faq['q'] }}</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-gray-500 transition-transform" :class="{ 'rotate-180': openFaq === {{ $i }} }">
-                                <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                        <div x-show="openFaq === {{ $i }}" x-collapse class="px-4 pb-4">
-                            <p class="text-sm text-gray-400">{{ $faq['a'] }}</p>
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-
-            <div class="bg-gray-900 rounded-lg border border-stroke-primary p-6">
-                <h2 class="text-lg font-semibold text-gray-200 mb-4 flex items-center space-x-2">
-                    <x-heroicon-s-chat-bubble-left-right class="w-5 h-5 text-green-400" />
-                    <span>Liên hệ hỗ trợ</span>
-                </h2>
-                <p class="text-sm text-gray-400 mb-4">Không tìm thấy câu trả lời? Liên hệ đội ngũ nhân viên qua:</p>
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <a href="{{ config('app.discord_url') }}" target="_blank" class="inline-flex items-center space-x-2 bg-[#404EED] hover:bg-[#3641C7] text-white px-4 py-2 rounded-lg text-sm font-medium transition">
-                        <img src="{{ asset('assets/logos/discord.svg') }}" class="w-5 h-5" alt="Discord">
-                        <span>Discord</span>
-                    </a>
-                    <span class="inline-flex items-center space-x-2 bg-gray-800 text-gray-300 px-4 py-2 rounded-lg text-sm">
-                        <x-heroicon-m-chat-bubble-left-ellipsis class="w-5 h-5" />
-                        <span>In-game: /help hoặc /report</span>
-                    </span>
                 </div>
             </div>
         </div>
