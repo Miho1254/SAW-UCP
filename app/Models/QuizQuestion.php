@@ -10,6 +10,7 @@ class QuizQuestion extends Model
     use HasFactory;
 
     public $timestamps = false;
+    protected $guarded = [];
 
     public function answers()
     {
