@@ -22,14 +22,4 @@ return new class extends Migration
             $table->text('content')->nullable(false)->change();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::table('release_notes', function (Blueprint $table) {
-            //
-        });
-    }
 };
