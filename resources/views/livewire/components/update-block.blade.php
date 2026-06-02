@@ -46,11 +46,13 @@ new class extends Component {
                     <div class="inline-flex items-center justify-between w-full">
                         <a href="{{route('update.view', $update->slug)}}"
                            class="text-blue-400 hover:text-blue-300 transition" wire:navigate>Xem bài đầy đủ</a>
-                        <a href="#"
+                        <button
+                           x-data="{ copied: false }"
+                           @click="navigator.clipboard.writeText('{{ route('update.view', $update->slug) }}').then(() => { copied = true; setTimeout(() => copied = false, 2000) })"
                            class="inline-flex space-x-1 items-center text-gray-500 hover:text-gray-400 transition">
                             <x-heroicon-o-link class="w-4 h-4"/>
-                            <span class="text-sm">Sao chép liên kết</span>
-                        </a>
+                            <span class="text-sm" x-text="copied ? 'Đã sao chép!' : 'Sao chép liên kết'">Sao chép liên kết</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -78,11 +80,13 @@ new class extends Component {
                         <button x-show="open" @click="open = ! open"
                                 class="text-blue-400 hover:text-blue-300 transition">Ẩn nhật ký thay đổi
                         </button>
-                         <a href="#"
+                         <button
+                           x-data="{ copied: false }"
+                           @click="navigator.clipboard.writeText('{{ route('update.view', $update->slug) }}').then(() => { copied = true; setTimeout(() => copied = false, 2000) })"
                            class="inline-flex space-x-1 items-center text-gray-500 hover:text-gray-400 transition">
                             <x-heroicon-o-link class="w-4 h-4"/>
-                            <span class="text-sm">Sao chép liên kết</span>
-                        </a>
+                            <span class="text-sm" x-text="copied ? 'Đã sao chép!' : 'Sao chép liên kết'">Sao chép liên kết</span>
+                        </button>
                     </div>
                 </div>
                 <div x-show="open"
