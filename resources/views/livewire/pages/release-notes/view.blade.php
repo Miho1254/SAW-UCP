@@ -38,10 +38,12 @@ class extends Component {
         <div class="text-gray-300 uses_discs render_markdown">
             {!! $update->description !!}
         </div>
-        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-        <div class="text-gray-300 uses_discs render_markdown">
-            {!! $update->content !!}
-        </div>
+        @if($update->content)
+            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+            <div class="text-gray-300 uses_discs render_markdown">
+                {!! $update->content !!}
+            </div>
+        @endif
         @if($update->added || $update->changed || $update->fixed || $update->removed)
             <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
             <div class="space-y-4">

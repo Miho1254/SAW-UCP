@@ -54,7 +54,7 @@ class ReleaseNoteResource extends Resource
                     ->icon('heroicon-o-document')
                     ->schema([
                         Forms\Components\RichEditor::make('description')->required()->hint('A basic introduction to the release, shown on the release notes page')->fileAttachmentsDisk('public')->fileAttachmentsDirectory('release-notes/attachments')->toolbarButtons(['bold', 'italic', 'underline', 'strike', 'link', 'bulletList', 'orderedList', 'h2', 'h3', 'blockquote', 'attachFiles']),
-                        Forms\Components\RichEditor::make('content')->required()->hint('The main content of the release note')->fileAttachmentsDisk('public')->fileAttachmentsDirectory('release-notes/attachments')->toolbarButtons(['bold', 'italic', 'underline', 'strike', 'link', 'bulletList', 'orderedList', 'h2', 'h3', 'blockquote', 'codeBlock', 'attachFiles']),
+                        Forms\Components\RichEditor::make('content')->hint('The main content of the release note')->nullable()->fileAttachmentsDisk('public')->fileAttachmentsDirectory('release-notes/attachments')->toolbarButtons(['bold', 'italic', 'underline', 'strike', 'link', 'bulletList', 'orderedList', 'h2', 'h3', 'blockquote', 'codeBlock', 'attachFiles']),
                     ]),
                 Section::make('Changes')
                     ->description('The changes made in this release. Write in bulletpoints for better readability.')
