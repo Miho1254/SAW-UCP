@@ -1,41 +1,16 @@
 <?php
 
 use Livewire\Volt\Component;
-use Illuminate\Support\Str;
 
 new class extends Component {
 
     public $update;
     public $key;
 
-    public string $description;
-    public string $content;
-
-    public string $added;
-    public string $removed;
-    public string $changed;
-    public string $fixed;
-
-    // This method will render the markdown content for the update.
-    public function renderMarkdown($inline = false): void
+    public function getImageUrl(): ?string
     {
-        // If the update is inline, we will process all the Markdown and convert it to HTML.
-        if ($inline) {
-            $this->description = Str::of($this->update->description)->markdown();
-            $this->added = Str::of($this->update->added)->markdown();
-            $this->removed = Str::of($this->update->removed)->markdown();
-            $this->changed = Str::of($this->update->changed)->markdown();
-            $this->fixed = Str::of($this->update->fixed)->markdown();
-            $this->content = Str::of($this->update->content)->markdown();
-        } else {
-            // If the update is not inline, we will only process only the description.
-            $this->description = Str::of($this->update->description)->markdown();
-        }
-    }
-
-    public function mount(): void
-    {
-        $this->renderMarkdown($this->update->inline);
+        if (!$this->update->image) return null;
+        return asset('storage/' . $this->update->image);
     }
 
 }; ?>
@@ -59,14 +34,14 @@ new class extends Component {
                     </a>
                 </div>
                 @if($update->image)
-                    <a href="{{route('update.view', $update->slug)}}" wire:navigate>>
-                        <img src="{{$update->image}}" alt="{{$update->title}}" class="w-full h-96 object-cover">
+                    <a href="{{route('update.view', $update->slug)}}" wire:navigate>
+                        <img src="{{ $this->getImageUrl() }}" alt="{{$update->title}}" class="w-full h-96 object-cover">
                     </a>
                 @endif
                 <div
                     class="bg-gray-800 rounded-b-lg border-x border-b border-stroke-primary @if($update->image) p-5 @else px-5 pb-5 pt-1 @endif space-y-4">
                     <div class="text-gray-400">
-                        {!! $description !!}
+                        {!! $update->description !!}
                     </div>
                     <div class="inline-flex items-center justify-between w-full">
                         <a href="{{route('update.view', $update->slug)}}"
@@ -94,7 +69,7 @@ new class extends Component {
                     </div>
                     <h2 class="text-white font-manrope text-2xl font-semibold">{{$update->title}}</h2>
                     <div class="text-gray-400">
-                        {!! $description !!}
+                        {!! $update->description !!}
                     </div>
                     <div class="inline-flex items-center justify-between w-full">
                         <button x-show="!open" @click="open = ! open"
@@ -114,7 +89,7 @@ new class extends Component {
                      class="bg-[#18191B] border-x border-b rounded-b-lg border-stroke-primary p-5 space-y-3"
                      x-transition>
                     <div class="text-gray-400">
-                        {!! $content !!}
+                        {!! $update->content !!}
                     </div>
                     @if($update->added)
                         <div>
@@ -123,7 +98,7 @@ new class extends Component {
                                 <h3 class="font-bold tracking-wide">THÊM MỚI</h3>
                             </div>
                             <div class="text-gray-400 list-disc uses_discs ml-2">
-                                {!! $added !!}
+                                {!! $update->added !!}
                             </div>
                         </div>
                     @endif
@@ -134,7 +109,7 @@ new class extends Component {
                                 <h3 class="font-bold tracking-wide">THAY ĐỔI</h3>
                             </div>
                             <div class="text-gray-400 list-disc uses_discs ml-2">
-                                {!! $changed !!}
+                                {!! $update->changed !!}
                             </div>
                         </div>
                     @endif
@@ -145,7 +120,7 @@ new class extends Component {
                                 <h3 class="font-bold tracking-wide">SỬA LỖI</h3>
                             </div>
                             <div class="text-gray-400 list-disc uses_discs ml-2">
-                                {!! $fixed !!}
+                                {!! $update->fixed !!}
                             </div>
                         </div>
                     @endif
@@ -156,7 +131,7 @@ new class extends Component {
                                 <h3 class="font-bold tracking-wide">ĐÃ XÓA</h3>
                             </div>
                             <div class="text-gray-400 list-disc uses_discs ml-2">
-                                {!! $removed !!}
+                                {!! $update->removed !!}
                             </div>
                         </div>
                     @endif

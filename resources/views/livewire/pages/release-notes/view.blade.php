@@ -3,7 +3,6 @@
 use Livewire\Attributes\{Layout, Title};
 use Livewire\Volt\Component;
 use App\Models\ReleaseNote;
-use Illuminate\Support\Str;
 
 new
 #[Layout('layouts.update')]
@@ -13,30 +12,15 @@ class extends Component {
     public $slug;
     public $update;
 
-    public string $description;
-    public string $content;
-
-    public string $added;
-    public string $removed;
-    public string $changed;
-    public string $fixed;
-
-    // This method will render the markdown content for the update.
-    public function renderMarkdown(): void
-    {
-        $this->description = Str::of($this->update->description)->markdown();
-        $this->added = Str::of($this->update->added)->markdown();
-        $this->removed = Str::of($this->update->removed)->markdown();
-        $this->changed = Str::of($this->update->changed)->markdown();
-        $this->fixed = Str::of($this->update->fixed)->markdown();
-        $this->content = Str::of($this->update->content)->markdown();
-        $this->description = Str::of($this->update->description)->markdown();
-    }
-
     public function mount(): void
     {
         $this->update = ReleaseNote::where('slug', $this->slug)->first();
-        $this->renderMarkdown();
+    }
+
+    public function getImageUrl(): ?string
+    {
+        if (!$this->update->image) return null;
+        return asset('storage/' . $this->update->image);
     }
 
 }; ?>
@@ -49,14 +33,64 @@ class extends Component {
             <span class="text-[#666666] text-sm text-semibold">Viết bởi {{$update->author}} · {{$update->created_at->diffForHumans()}}</span>
         </div>
         @if($update->image)
-            <img src="{{$update->image}}" alt="{{$update->title}}" class="w-full h-96 object-cover rounded-lg my-4">
+            <img src="{{ $this->getImageUrl() }}" alt="{{$update->title}}" class="w-full h-96 object-cover rounded-lg my-4">
         @endif
         <div class="text-gray-300 uses_discs render_markdown">
-            {!! $description !!}
+            {!! $update->description !!}
         </div>
         <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
         <div class="text-gray-300 uses_discs render_markdown">
-            {!! $content !!}
+            {!! $update->content !!}
         </div>
+        @if($update->added || $update->changed || $update->fixed || $update->removed)
+            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+            <div class="space-y-4">
+                <h2 class="text-white text-xl font-manrope font-semibold">Nhật ký thay đổi</h2>
+                @if($update->added)
+                    <div>
+                        <div class="text-green-500 inline-flex items-center space-x-1">
+                            <x-heroicon-m-plus-circle class="w-5 h-5"/>
+                            <h3 class="font-bold tracking-wide">THÊM MỚI</h3>
+                        </div>
+                        <div class="text-gray-300 list-disc uses_discs ml-2 render_markdown">
+                            {!! $update->added !!}
+                        </div>
+                    </div>
+                @endif
+                @if($update->changed)
+                    <div>
+                        <div class="text-blue-400 inline-flex items-center space-x-1">
+                            <x-heroicon-m-pencil-square class="w-5 h-5"/>
+                            <h3 class="font-bold tracking-wide">THAY ĐỔI</h3>
+                        </div>
+                        <div class="text-gray-300 list-disc uses_discs ml-2 render_markdown">
+                            {!! $update->changed !!}
+                        </div>
+                    </div>
+                @endif
+                @if($update->fixed)
+                    <div>
+                        <div class="text-orange-500 inline-flex items-center space-x-1">
+                            <x-heroicon-m-bug-ant class="w-5 h-5"/>
+                            <h3 class="font-bold tracking-wide">SỬA LỖI</h3>
+                        </div>
+                        <div class="text-gray-300 list-disc uses_discs ml-2 render_markdown">
+                            {!! $update->fixed !!}
+                        </div>
+                    </div>
+                @endif
+                @if($update->removed)
+                    <div>
+                        <div class="text-red-500 inline-flex items-center space-x-1">
+                            <x-heroicon-m-trash class="w-5 h-5"/>
+                            <h3 class="font-bold tracking-wide">ĐÃ XÓA</h3>
+                        </div>
+                        <div class="text-gray-300 list-disc uses_discs ml-2 render_markdown">
+                            {!! $update->removed !!}
+                        </div>
+                    </div>
+                @endif
+            </div>
+        @endif
     </div>
 </div>

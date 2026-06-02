@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ReleaseNoteResource\Pages;
-use App\Filament\Resources\ReleaseNoteResource\RelationManagers;
 use App\Models\ReleaseNote;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
@@ -12,8 +11,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ReleaseNoteResource extends Resource
 {
@@ -45,29 +42,29 @@ class ReleaseNoteResource extends Resource
                         TextInput::make('slug')->disabled(),
                     ]),
                 Section::make('Main Image')
-                    ->description('The main image shown on the release notes page')
+                    ->description('The main image shown on the release notes page (optional)')
                     ->columns(1)
                     ->icon('heroicon-o-camera')
                     ->schema([
-                        Forms\Components\FileUpload::make('image')->image()->required(),
+                        Forms\Components\FileUpload::make('image')->image()->disk('public')->directory('release-notes')->nullable(),
                     ]),
                 Section::make('Content')
                     ->description('The content of this release note')
                     ->columns(1)
                     ->icon('heroicon-o-document')
                     ->schema([
-                        Forms\Components\MarkdownEditor::make('description')->required()->hint('A basic introduction to the release, shown on the release notes page'),
-                        Forms\Components\MarkdownEditor::make('content')->required()->hint('The main content of the release note'),
+                        Forms\Components\RichEditor::make('description')->required()->hint('A basic introduction to the release, shown on the release notes page')->fileAttachmentsDisk('public')->fileAttachmentsDirectory('release-notes/attachments')->toolbarButtons(['bold', 'italic', 'underline', 'strike', 'link', 'bulletList', 'orderedList', 'h2', 'h3', 'blockquote', 'attachFiles']),
+                        Forms\Components\RichEditor::make('content')->required()->hint('The main content of the release note')->fileAttachmentsDisk('public')->fileAttachmentsDirectory('release-notes/attachments')->toolbarButtons(['bold', 'italic', 'underline', 'strike', 'link', 'bulletList', 'orderedList', 'h2', 'h3', 'blockquote', 'codeBlock', 'attachFiles']),
                     ]),
                 Section::make('Changes')
                     ->description('The changes made in this release. Write in bulletpoints for better readability.')
                     ->columns(1)
                     ->icon('heroicon-o-pencil')
                     ->schema([
-                        Forms\Components\MarkdownEditor::make('added')->hint('New features added in this release'),
-                        Forms\Components\MarkdownEditor::make('changed')->hint('Changes made to existing features'),
-                        Forms\Components\MarkdownEditor::make('fixed')->hint('Bugs fixed in this release'),
-                        Forms\Components\MarkdownEditor::make('removed')->hint('Features removed in this release'),
+                        Forms\Components\RichEditor::make('added')->hint('New features added in this release')->fileAttachmentsDisk('public')->fileAttachmentsDirectory('release-notes/attachments')->toolbarButtons(['bold', 'italic', 'underline', 'strike', 'link', 'bulletList', 'orderedList', 'attachFiles']),
+                        Forms\Components\RichEditor::make('changed')->hint('Changes made to existing features')->fileAttachmentsDisk('public')->fileAttachmentsDirectory('release-notes/attachments')->toolbarButtons(['bold', 'italic', 'underline', 'strike', 'link', 'bulletList', 'orderedList', 'attachFiles']),
+                        Forms\Components\RichEditor::make('fixed')->hint('Bugs fixed in this release')->fileAttachmentsDisk('public')->fileAttachmentsDirectory('release-notes/attachments')->toolbarButtons(['bold', 'italic', 'underline', 'strike', 'link', 'bulletList', 'orderedList', 'attachFiles']),
+                        Forms\Components\RichEditor::make('removed')->hint('Features removed in this release')->fileAttachmentsDisk('public')->fileAttachmentsDirectory('release-notes/attachments')->toolbarButtons(['bold', 'italic', 'underline', 'strike', 'link', 'bulletList', 'orderedList', 'attachFiles']),
                     ]),
             ]);
     }
